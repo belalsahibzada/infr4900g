@@ -12,6 +12,7 @@ import json
 import hashlib
 import requests
 from urllib.parse import urlparse
+from datetime import datetime
 
 MINING_SENDER = "The Blockchain"
 MINING_REWARD = 1
@@ -130,11 +131,16 @@ class Blockchain:
 
         return True
 
-    def submit_transaction(self, sender_public_key, recipient_public_key, signature, amount):
+    def submit_transaction(self, sender_public_key, recipient_public_key, signature, amount,product_id,status,delivery_location,extra_details):
         transaction = OrderedDict({
             'sender_public_key': sender_public_key,
             'recipient_public_key': recipient_public_key,
-            'amount': amount
+            'amount': amount,
+            'product_id':product_id,
+            'status':status,
+            'delivery_location':delivery_location,
+            'extra_details':extra_details,
+            'timestamp':str(datetime.now()),
         })
 
         # Reward for mining a block
@@ -143,7 +149,7 @@ class Blockchain:
             return len(self.chain) + 1
         else:
             # Transaction from wallet to another wallet
-            signature_verification = self.verify_transaction_signature(sender_public_key, signature, transaction)
+            signature_verification = self.verify_transaction_signature(sender_public_key, signature, transaction,sender_public_key, recipient_public_key, signature, amount,product_id,status,delivery_location,extra_details)
             if signature_verification:
                 self.transactions.append(transaction)
                 return len(self.chain) + 1
@@ -194,7 +200,12 @@ def mine():
     blockchain.submit_transaction(sender_public_key=MINING_SENDER,
                                   recipient_public_key=blockchain.node_id,
                                   signature='',
-                                  amount=MINING_REWARD)
+                                  amount=MINING_REWARD,
+                                  product_id="",
+                                  status="",
+                                  delivery_location="",
+                                  extra_details="",
+                                  timestamp="")
 
     last_block = blockchain.chain[-1]
     previous_hash = blockchain.hash(last_block)
@@ -214,14 +225,18 @@ def mine():
 def new_transaction():
     values = request.form
     required = ['confirmation_sender_public_key', 'confirmation_recipient_public_key', 'transaction_signature',
-                'confirmation_amount']
+                'confirmation_amount','confirmation_product_id','confirmation_status','confirmation_delivery_location','confirmation_extra_details']
     if not all(k in values for k in required):
         return 'Missing values', 400
 
     transaction_results = blockchain.submit_transaction(values['confirmation_sender_public_key'],
                                                         values['confirmation_recipient_public_key'],
                                                         values['transaction_signature'],
-                                                        values['confirmation_amount'])
+                                                        values['confirmation_amount'],
+                                                        values['confirmation_product_id'],
+                                                        values['confirmation_status'],
+                                                        values['confirmation_delivery_location'],
+                                                        values['confirmation_extra_details'])
     if transaction_results == False:
         response = {'message': 'Invalid transaction/signature'}
         return jsonify(response), 406
