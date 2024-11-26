@@ -118,7 +118,7 @@ class Blockchain:
                 return False
 
             transactions = block['transactions'][:-1]
-            transaction_elements = ['sender_public_key', 'recipient_public_key', 'amount']
+            transaction_elements = ['sender_public_key', 'recipient_public_key', 'amount','product_id','status','delivery_location','extra_details']
             transactions = [OrderedDict((k, transaction[k]) for k in transaction_elements) for transaction in
                             transactions]
 
@@ -130,11 +130,15 @@ class Blockchain:
 
         return True
 
-    def submit_transaction(self, sender_public_key, recipient_public_key, signature, amount):
+    def submit_transaction(self, sender_public_key, recipient_public_key, signature, amount,product_id,status,delivery_location,extra_details):
         transaction = OrderedDict({
             'sender_public_key': sender_public_key,
             'recipient_public_key': recipient_public_key,
-            'amount': amount
+            'amount': amount,
+            'product_id':product_id,
+            'status':status,
+            'delivery_location':delivery_location,
+            'extra_details':extra_details
         })
 
         # Reward for mining a block
@@ -214,14 +218,19 @@ def mine():
 def new_transaction():
     values = request.form
     required = ['confirmation_sender_public_key', 'confirmation_recipient_public_key', 'transaction_signature',
-                'confirmation_amount']
+                'confirmation_amount','confirmation_product_id','confirmation_status','confirmation_delivery_location','confirmation_extra_details']
     if not all(k in values for k in required):
         return 'Missing values', 400
 
     transaction_results = blockchain.submit_transaction(values['confirmation_sender_public_key'],
                                                         values['confirmation_recipient_public_key'],
                                                         values['transaction_signature'],
-                                                        values['confirmation_amount'])
+                                                        values['confirmation_amount'],
+                                                        values['confirmation_product_id'],
+                                                        values['confirmation_status'],
+                                                        values['confirmation_delivery_location'],
+                                                        values['confirmation_extra_details']
+                                                        )
     if transaction_results == False:
         response = {'message': 'Invalid transaction/signature'}
         return jsonify(response), 406

@@ -103,6 +103,7 @@
                                 response['chain'][i]['transactions'][j]['sender_public_key'],
                                 response['chain'][i]['transactions'][j]['recipient_public_key'],
                                 response['chain'][i]['transactions'][j]['amount'],
+                                response['chain'][i]['transactions'][j]['product_id'],
                                 formattedTimestamp,
                                 response['chain'][i]['block_number']
                             ]
@@ -119,6 +120,7 @@
                             {title: "Sender Public Key"},
                             {title: "Recipient Public Key"},
                             {title: "Amount"},
+                            {title: "Product ID"},
                             {title: "Timestamp"},
                             {title: "Block#"},
 
@@ -148,6 +150,7 @@
                             response['transactions'][i]['sender_public_key'],
                             response['transactions'][i]['recipient_public_key'],
                             response['transactions'][i]['amount'],
+                            response['transactions'][i]['product_id'],
                         ]
 
                         transactions.push(transaction);
@@ -162,6 +165,7 @@
                             {title: "Sender Public Key"},
                             {title: "Recipient Public Key"},
                             {title: "Amount"},
+                            {title: "Product ID"},
                         ],
                         columnDefs: [{targets: [1,2,3], render: $.fn.dataTable.render.ellipsis(25)}]
                     });

@@ -86,6 +86,42 @@
             <br>
 
             <div class="row">
+              <label class="col-sm-2">Product ID:</label>
+              <div class="col-sm-10">
+                  <input type="text" name="product_id" id="product_id" class="form-control">
+              </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+              <label class="col-sm-2">Status:</label>
+              <div class="col-sm-10">
+                <input type="text" name="status" id="status" class="form-control">
+              </div>
+            </div>
+
+           <br>
+
+            <div class="row">
+              <label class="col-sm-2">Delivery Location:</label>
+              <div class="col-sm-10">
+                <input type="text" name="delivery_location" id="delivery_location" class="form-control">
+              </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+              <label class="col-sm-2">Extra Details:</label>
+              <div class="col-sm-10">
+                <input type="text" name="extra_details" id="extra_details" class="form-control">
+              </div>
+            </div>
+
+            <br>
+
+            <div class="row">
                 <div class="col-sm-12 text-center">
                     <input type="button" name="generate_transaction" id="generate_transaction" class="btn btn-primary btn-lg" value="Generate Transaction">
                 </div>
@@ -128,6 +164,34 @@
                   <label class="col-sm-12">Amount to Send:</label>
                   <div class="col-sm-12">
                     <input type="text" name="confirmation_amount" id="confirmation_amount" rows="2" class="form-control" readonly>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <label class="col-sm-12">Product ID:</label>
+                  <div class="col-sm-12">
+                    <input type="text" name="confirmation_product_id" id="confirmation_product_id" rows="2" class="form-control" readonly>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <label class="col-sm-12">Status:</label>
+                  <div class="col-sm-12">
+                    <input type="text" name="confirmation_status" id="confirmation_status" rows="2" class="form-control" readonly>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <label class="col-sm-12">Delivery Location:</label>
+                  <div class="col-sm-12">
+                    <input type="text" name="confirmation_delivery_location" id="confirmation_delivery_location" rows="2" class="form-control" readonly>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <label class="col-sm-12">Extra Details:</label>
+                  <div class="col-sm-12">
+                    <input type="text" name="confirmation_extra_details" id="confirmation_extra_details" rows="2" class="form-control" readonly>
                   </div>
                 </div>
 
@@ -204,6 +268,10 @@
                         document.getElementById('confirmation_sender_public_key').value = response['transaction']['sender_public_key'];
                         document.getElementById('confirmation_recipient_public_key').value = response['transaction']['recipient_public_key'];
                         document.getElementById('confirmation_amount').value = response['transaction']['amount'];
+                        document.getElementById('confirmation_product_id').value = response['transaction']['product_id'];
+                        document.getElementById('confirmation_status').value = response['transaction']['status'];
+                        document.getElementById('confirmation_delivery_location').value = response['transaction']['delivery_location'];
+                        document.getElementById('confirmation_extra_details').value = response['transaction']['extra_details'];
                         document.getElementById('transaction_signature').value = response['signature'];
 
                         $('#basic_modal').modal('show');
@@ -225,7 +293,11 @@
                         /*$('#sender_public_key').val('');
                         $('#sender_private_key').val('');
                         $('#recipient_public_key').val('');
-                        $('#amount').val('');*/
+                        $('#amount').val('');
+                        $('#product_id').val('');
+                        $('#status').val('');
+                        $('#delivery_location').val('');
+                        $('#extra_details').val('');*/
 
                         $('#basic_modal').modal('hide');
                         $('#success_transaction_modal').modal('show');
