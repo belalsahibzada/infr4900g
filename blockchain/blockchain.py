@@ -12,6 +12,7 @@ import json
 import hashlib
 import requests
 from urllib.parse import urlparse
+from datetime import datetime
 
 MINING_SENDER = "The Blockchain"
 MINING_REWARD = 1
@@ -147,7 +148,7 @@ class Blockchain:
             return len(self.chain) + 1
         else:
             # Transaction from wallet to another wallet
-            signature_verification = self.verify_transaction_signature(sender_public_key, signature, transaction)
+            signature_verification = self.verify_transaction_signature(sender_public_key, signature, transaction,sender_public_key, recipient_public_key, signature, amount,product_id,status,delivery_location,extra_details)
             if signature_verification:
                 self.transactions.append(transaction)
                 return len(self.chain) + 1
@@ -198,7 +199,12 @@ def mine():
     blockchain.submit_transaction(sender_public_key=MINING_SENDER,
                                   recipient_public_key=blockchain.node_id,
                                   signature='',
-                                  amount=MINING_REWARD)
+                                  amount=MINING_REWARD,
+                                  product_id="",
+                                  status="",
+                                  delivery_location="",
+                                  extra_details="",
+                                  timestamp="")
 
     last_block = blockchain.chain[-1]
     previous_hash = blockchain.hash(last_block)
@@ -229,8 +235,8 @@ def new_transaction():
                                                         values['confirmation_product_id'],
                                                         values['confirmation_status'],
                                                         values['confirmation_delivery_location'],
-                                                        values['confirmation_extra_details']
-                                                        )
+                                                        values['confirmation_extra_details'])
+
     if transaction_results == False:
         response = {'message': 'Invalid transaction/signature'}
         return jsonify(response), 406
