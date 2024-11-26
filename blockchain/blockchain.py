@@ -119,7 +119,7 @@ class Blockchain:
                 return False
 
             transactions = block['transactions'][:-1]
-            transaction_elements = ['sender_public_key', 'recipient_public_key', 'amount']
+            transaction_elements = ['sender_public_key', 'recipient_public_key', 'amount','product_id','status','delivery_location','extra_details']
             transactions = [OrderedDict((k, transaction[k]) for k in transaction_elements) for transaction in
                             transactions]
 
@@ -139,8 +139,7 @@ class Blockchain:
             'product_id':product_id,
             'status':status,
             'delivery_location':delivery_location,
-            'extra_details':extra_details,
-            'timestamp':str(datetime.now()),
+            'extra_details':extra_details
         })
 
         # Reward for mining a block
@@ -237,6 +236,7 @@ def new_transaction():
                                                         values['confirmation_status'],
                                                         values['confirmation_delivery_location'],
                                                         values['confirmation_extra_details'])
+
     if transaction_results == False:
         response = {'message': 'Invalid transaction/signature'}
         return jsonify(response), 406
