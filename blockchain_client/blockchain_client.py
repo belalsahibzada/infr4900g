@@ -11,7 +11,7 @@ from Crypto.Hash import SHA
 
 class Transaction:
     def __init__(self,sender_public_key,sender_private_key,
-                 recipient_public_key,amount,product_id,status,delivery_location,extra_details):
+                 recipient_public_key,amount,product_id,status,delivery_location,extra_details,timestamp=None):
         self.sender_public_key = sender_public_key
         self.sender_private_key = sender_private_key
         self.recipient_public_key = recipient_public_key
@@ -20,7 +20,7 @@ class Transaction:
         self.status = status
         self.delivery_location = delivery_location
         self.extra_details = extra_details
-       
+        self.timestamp = timestamp
     def to_dict(self):
         return OrderedDict({
             'sender_public_key':self.sender_public_key,
@@ -29,8 +29,8 @@ class Transaction:
             'product_id':self.product_id,
             'status':self.status,
             'delivery_location':self.delivery_location,
-            'extra_details':self.extra_details
-
+            'extra_details':self.extra_details,
+            'timestamp':str(datetime.now()),
         })
     def sign_transaction(self):
         private_key = RSA.importKey(binascii.unhexlify(self.sender_private_key))

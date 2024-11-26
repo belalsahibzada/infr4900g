@@ -104,6 +104,9 @@
                                 response['chain'][i]['transactions'][j]['recipient_public_key'],
                                 response['chain'][i]['transactions'][j]['amount'],
                                 response['chain'][i]['transactions'][j]['product_id'],
+                                response['chain'][i]['transactions'][j]['status'], 
+                                response['chain'][i]['transactions'][j]['delivery_location'], 
+                                response['chain'][i]['transactions'][j]['extra_details'],
                                 formattedTimestamp,
                                 response['chain'][i]['block_number']
                             ]
@@ -121,6 +124,9 @@
                             {title: "Recipient Public Key"},
                             {title: "Amount"},
                             {title: "Product ID"},
+                            { title: "Status" }, // New column
+                            { title: "Delivery Location" }, // New column
+                            { title: "Extra Details" },
                             {title: "Timestamp"},
                             {title: "Block#"},
 
@@ -151,6 +157,9 @@
                             response['transactions'][i]['recipient_public_key'],
                             response['transactions'][i]['amount'],
                             response['transactions'][i]['product_id'],
+                            response['transactions'][i]['status'],
+                            response['transactions'][i]['delivery_location'],
+                            response['transactions'][i]['extra_details'],
                         ]
 
                         transactions.push(transaction);
@@ -166,6 +175,9 @@
                             {title: "Recipient Public Key"},
                             {title: "Amount"},
                             {title: "Product ID"},
+                            { title: "Status" }, // New column
+                            { title: "Delivery Location" }, // New column
+                            { title: "Extra Details" }
                         ],
                         columnDefs: [{targets: [1,2,3], render: $.fn.dataTable.render.ellipsis(25)}]
                     });
