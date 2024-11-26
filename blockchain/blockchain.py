@@ -148,7 +148,7 @@ class Blockchain:
             return len(self.chain) + 1
         else:
             # Transaction from wallet to another wallet
-            signature_verification = self.verify_transaction_signature(sender_public_key, signature, transaction,sender_public_key, recipient_public_key, signature, amount,product_id,status,delivery_location,extra_details)
+            signature_verification = self.verify_transaction_signature(sender_public_key, signature, transaction)
             if signature_verification:
                 self.transactions.append(transaction)
                 return len(self.chain) + 1
