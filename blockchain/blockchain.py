@@ -203,8 +203,7 @@ def mine():
                                   product_id="",
                                   status="",
                                   delivery_location="",
-                                  extra_details="",
-                                  timestamp="")
+                                  extra_details="")
 
     last_block = blockchain.chain[-1]
     previous_hash = blockchain.hash(last_block)
