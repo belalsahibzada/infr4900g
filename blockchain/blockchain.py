@@ -242,6 +242,10 @@ def new_transaction():
     else:
         response = {'message': 'Transaction will be added to the Block ' + str(transaction_results)}
         return jsonify(response), 201
+    
+@app.route('/transaction_search')
+def transaction_search():
+    return render_template('./transaction_search.html')
 
 
 @app.route('/nodes/get', methods=['GET'])
