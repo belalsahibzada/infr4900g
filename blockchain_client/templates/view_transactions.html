@@ -69,6 +69,12 @@
     </div>
 
     <br>
+
+    <div id="search_container" class="container" style="display: none";>
+      <label for="search_product_id">Search Product ID:</label>
+      <input type="text" id="search_product_id" class="form-control" placeholder="Enter Product ID">
+  </div>
+
     <!-- Blockchain Transactions Table -->
     <div class="container">
       <table id="transactions_table" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -119,6 +125,8 @@
                     };
                   };
 
+
+
                   // Restrict a column to 10 characters, do split words
                     $('#transactions_table').dataTable( {
                       data: transactions,
@@ -132,8 +140,30 @@
                                 { title: "Extra Details"},
                                 { title: "Timestamp"},
                                 { title: "Block"}],
-                      columnDefs: [ {targets: [1,2,3,4,5], render: $.fn.dataTable.render.ellipsis( 25 )}]
-                    } );
+                      columnDefs: [ {targets: [1,2,3,4,5], render: $.fn.dataTable.render.ellipsis( 25 )}
+                    ],
+                    dom: 'lfrtip', 
+                    initComplete: function() {
+
+                      $('#transactions_table_filter').hide(); // Hide the default search bar because we couldnt search by product id
+
+                    }});
+
+                    $('#search_container').show();
+
+                    $('#search_product_id').on('keyup', function() {
+                      var product_ID = $(this).val().toLowerCase();
+
+                      $('#transactions_table').DataTable().rows().every(function() {
+                          var product_ID_column = this.data()[4]; 
+                          var match = product_ID_column.toString().toLowerCase().includes(product_ID);
+                          if (match) {
+                              this.node().style.display = ''; // Show the row
+                          } else {
+                              this.node().style.display = 'none'; // Hide the row
+                          }
+                      });
+                  });
 
                 },
                 error: function(error){
