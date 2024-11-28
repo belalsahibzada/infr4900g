@@ -70,10 +70,14 @@
 
     <br>
 
+    //maia part ------------------------------------------------------------------------------------
+
     <div id="search_container" class="container" style="display: none";>
       <label for="search_product_id">Search Product ID:</label>
       <input type="text" id="search_product_id" class="form-control" placeholder="Enter Product ID">
   </div>
+
+  //maia part end -------------------------------------------------------------------------------------
 
     <!-- Blockchain Transactions Table -->
     <div class="container">
@@ -142,6 +146,7 @@
                                 { title: "Block"}],
                       columnDefs: [ {targets: [1,2,3,4,5], render: $.fn.dataTable.render.ellipsis( 25 )}
                     ],
+                    //maias portion ------------------------------------------------------------------------------
                     dom: 'lfrtip', 
                     initComplete: function() {
 
@@ -164,6 +169,7 @@
                           }
                       });
                   });
+                  //maia portion end -------------------------------------------------------------------------------
 
                 },
                 error: function(error){
